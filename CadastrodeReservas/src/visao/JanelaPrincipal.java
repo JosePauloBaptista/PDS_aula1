@@ -1,6 +1,7 @@
 package visao;
 
 import java.awt.EventQueue;
+import java.time.LocalDate;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -31,28 +32,30 @@ public class JanelaPrincipal extends JFrame {
 		
 	Cadastro de reservas/quartos de hotel para um sistema de turismo
 
-	Nome do Hóspede - Digitado
-	CPF - Digitado
-	Email - Digitado
-	Telefone - Digitado
-	Data de Check-in - Digitado
-	Data de Check-out - Digitado
-	Número do Quarto - Digitado
-	Tipo de Quarto - ComboBox
-	Número de Hóspedes - Digitado (Máx. 4)
-	Necessidades Especiais - ComboBox
-	Método de Pagamento - ComboBox
-	Total a Pagar - Calculado
-	Status da Reserva - Digitado
-	Comentários - Digitado
-	Código da Reserva - Digitado
+	Nome do Hóspede - Digitado 
+	CPF - Digitado 
+	Email - Digitado 
+	Telefone - Digitado 
+	
+	Data de Check-in - Digitado 
+	Data de Check-out - Digitado 
+	Número do Quarto - Digitado 
+	Tipo de Quarto - ComboBox 
+	Número de Hóspedes - Digitado (Máx. 4) 
+	Necessidades Especiais - Boolean
+	Método de Pagamento - ComboBox 
+	Total a Pagar - Calculado 
+	Status da Reserva - ComboBox 
+	Comentários - Digitado 
+	Código da Reserva - Digitado 
+	
 	*/
 	/**
 	 * Create the frame.
 	 */
 	public JanelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 745, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
