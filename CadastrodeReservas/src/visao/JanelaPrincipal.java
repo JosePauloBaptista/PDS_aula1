@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
+
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -15,6 +17,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTable;
 
 public class JanelaPrincipal extends JFrame {
 
@@ -47,6 +50,7 @@ public class JanelaPrincipal extends JFrame {
 	private JTextField textComent;
 	private JFormattedTextField formattedTextCheckIn;
 	private JFormattedTextField formattedTextCheckOut;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -91,116 +95,128 @@ public class JanelaPrincipal extends JFrame {
 	 */
 	public JanelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 745, 467);
+		setBounds(100, 100, 572, 418);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[][][99.00][][grow]", "[][][][][][][][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][99.00][grow]", "[][][][][][][grow][][][][][][]"));
 		contentPane.setLayout(new MigLayout("", "[91px][86px][143px]", "[17px][20px][20px][20px][14px][20px]"));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Reserva");
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		contentPane.add(lblNewLabel, "cell 2 0");
+		contentPane.add(lblNewLabel, "cell 1 0");
 		
 		JLabel lblNome = new JLabel("Nome do Hóspede:");
 		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
-		contentPane.add(lblNome, "cell 1 2");
+		contentPane.add(lblNome, "cell 0 2");
 		
 		textNomeHospede = new JTextField();
-		contentPane.add(textNomeHospede, "cell 2 2");
+		contentPane.add(textNomeHospede, "cell 1 2");
 		textNomeHospede.setColumns(10);
 		
 		lblCheckIn = new JLabel("Check-In:");
-		contentPane.add(lblCheckIn, "cell 3 2,alignx left");
+		contentPane.add(lblCheckIn, "cell 2 2,alignx left");
 		
-		formattedTextCheckIn = new JFormattedTextField();
-		contentPane.add(formattedTextCheckIn, "cell 4 2,growx");
+		JFormattedTextField jftfData1 = new JFormattedTextField(setMascara("##/##/####"));
+		contentPane.add(formattedTextCheckIn, "cell 3 2,growx");
 		
 		lblCPF = new JLabel("CPF:");
-		contentPane.add(lblCPF, "cell 1 3");
+		contentPane.add(lblCPF, "cell 0 3");
 		
 		textCPF = new JTextField();
-		contentPane.add(textCPF, "cell 2 3");
+		contentPane.add(textCPF, "cell 1 3");
 		textCPF.setColumns(10);
 		
 		lblCheckOut = new JLabel("Check-Out:");
-		contentPane.add(lblCheckOut, "cell 3 3,alignx left");
+		contentPane.add(lblCheckOut, "cell 2 3,alignx left");
 		
-		formattedTextCheckOut = new JFormattedTextField();
-		contentPane.add(formattedTextCheckOut, "cell 4 3,growx");
+		/*
+		JFormattedTextField jftfTelefone = new JFormattedTextField((setMascara("(##) ####-####"))
+		*/
+		JFormattedTextField jftfData2 = new JFormattedTextField(setMascara("##/##/####"));
+		contentPane.add(formattedTextCheckOut, "cell 3 3,growx");
 		
 		JLabel lblEmail = new JLabel("Email:");
-		contentPane.add(lblEmail, "cell 1 4");
+		contentPane.add(lblEmail, "cell 0 4");
 		
 		textEmail = new JTextField();
-		contentPane.add(textEmail, "cell 2 4");
+		contentPane.add(textEmail, "cell 1 4");
 		textEmail.setColumns(10);
 		
 		lblNumQuarto = new JLabel("Num. do Quarto:");
-		contentPane.add(lblNumQuarto, "cell 3 4");
+		contentPane.add(lblNumQuarto, "cell 2 4");
 		
 		textNumQuarto = new JTextField();
-		contentPane.add(textNumQuarto, "cell 4 4");
+		contentPane.add(textNumQuarto, "cell 3 4");
 		textNumQuarto.setColumns(10);
 		
 		lblNewLabel_4 = new JLabel("Telefone:");
-		contentPane.add(lblNewLabel_4, "cell 1 5");
+		contentPane.add(lblNewLabel_4, "cell 0 5");
 		
 		textTelefone = new JTextField();
-		contentPane.add(textTelefone, "cell 2 5");
+		contentPane.add(textTelefone, "cell 1 5");
 		textTelefone.setColumns(10);
 		
 		lblTipoQuarto = new JLabel("Tipo do Quarto:");
-		contentPane.add(lblTipoQuarto, "cell 3 5");
+		contentPane.add(lblTipoQuarto, "cell 2 5");
 		
 		textTipoQuarto = new JTextField();
-		contentPane.add(textTipoQuarto, "cell 4 5");
+		contentPane.add(textTipoQuarto, "cell 3 5");
 		textTipoQuarto.setColumns(10);
 		
-		comboBoxNumHospedes = new JComboBox();
-		contentPane.add(comboBoxNumHospedes, "cell 4 6");
+		table = new JTable();
+		contentPane.add(table, "cell 0 6 2 7,grow");
 		
 		lblNumHospedes = new JLabel("Num. de Hóspedes:");
-		contentPane.add(lblNumHospedes, "cell 3 6");
+		contentPane.add(lblNumHospedes, "cell 2 6");
+		
+		comboBoxNumHospedes = new JComboBox();
+		contentPane.add(comboBoxNumHospedes, "cell 3 6");
 		
 		lblNewLabel_1 = new JLabel("Necessidades Especiais:");
-		contentPane.add(lblNewLabel_1, "cell 3 7");
+		contentPane.add(lblNewLabel_1, "cell 2 7");
 		
 		comboBoxNecesEspeciais = new JComboBox();
-		contentPane.add(comboBoxNecesEspeciais, "cell 4 7");
+		contentPane.add(comboBoxNecesEspeciais, "cell 3 7");
 		
 		lblMetodoPag = new JLabel("Método de Pagamento:");
-		contentPane.add(lblMetodoPag, "cell 3 8");
+		contentPane.add(lblMetodoPag, "cell 2 8");
 		
 		comboBoxMetPagamento = new JComboBox();
-		contentPane.add(comboBoxMetPagamento, "cell 4 8");
+		contentPane.add(comboBoxMetPagamento, "cell 3 8");
 		
 		lblTotalPagamento = new JLabel("Total à Pagar:");
-		contentPane.add(lblTotalPagamento, "cell 3 9");
+		contentPane.add(lblTotalPagamento, "cell 2 9");
 		
 		lblTotalPagar = new JLabel("  -  ");
-		contentPane.add(lblTotalPagar, "cell 4 9");
+		contentPane.add(lblTotalPagar, "cell 3 9");
 		
 		lblStatusReserva = new JLabel("Status da Reserva:");
-		contentPane.add(lblStatusReserva, "cell 3 10");
+		contentPane.add(lblStatusReserva, "cell 2 10");
 		
 		comboBoxStatusReserva = new JComboBox();
-		contentPane.add(comboBoxStatusReserva, "cell 4 10");
+		contentPane.add(comboBoxStatusReserva, "cell 3 10");
 		
 		lblCodReserva = new JLabel("Código da Reserva:");
-		contentPane.add(lblCodReserva, "cell 3 11");
+		contentPane.add(lblCodReserva, "cell 2 11");
 		
 		textFieldCodReserva = new JTextField();
-		contentPane.add(textFieldCodReserva, "cell 4 11");
+		contentPane.add(textFieldCodReserva, "cell 3 11");
 		textFieldCodReserva.setColumns(10);
 		
 		lblComent = new JLabel("Comentários:");
-		contentPane.add(lblComent, "cell 3 12");
+		contentPane.add(lblComent, "cell 2 12");
 		
 		textComent = new JTextField();
-		contentPane.add(textComent, "cell 4 12");
+		contentPane.add(textComent, "cell 3 12");
 		textComent.setColumns(10);
 	}
-
+	private MaskFormatter setMascara(String mascara){
+	    MaskFormatter mask = null;
+	    try{
+	        mask = new MaskFormatter(mascara);                      
+	        }catch(java.text.ParseException ex){}
+	    return mask;
+	}
 }
