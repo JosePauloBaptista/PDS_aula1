@@ -8,16 +8,21 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
+import modelo.MetodoPagamento;
+import modelo.StatusReserva;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.JScrollBar;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JTable;
+import javax.swing.JRadioButton;
+import javax.swing.JTextPane;
 
 public class JanelaPrincipal extends JFrame {
 
@@ -33,7 +38,6 @@ public class JanelaPrincipal extends JFrame {
 	private JLabel lblNumQuarto;
 	private JLabel lblTipoQuarto;
 	private JTextField textNumQuarto;
-	private JComboBox comboBoxNumHospedes;
 	private JLabel lblNumHospedes;
 	private JLabel lblNewLabel_1;
 	private JLabel lblMetodoPag;
@@ -42,15 +46,17 @@ public class JanelaPrincipal extends JFrame {
 	private JLabel lblCodReserva;
 	private JLabel lblComent;
 	private JTextField textTipoQuarto;
-	private JComboBox comboBoxMetPagamento;
-	private JComboBox comboBoxStatusReserva;
+	private JComboBox<MetodoPagamento> comboBoxMetPagamento;
+	private JComboBox<StatusReserva> comboBoxStatusReserva;
 	private JLabel lblTotalPagar;
-	private JComboBox comboBoxNecesEspeciais;
 	private JTextField textFieldCodReserva;
-	private JTextField textComent;
+	private JRadioButton rdbtnPCDSim;
+	private JRadioButton rdbtnPCDNao;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JTextPane textPaneComent;
+	private JTextField textNumHospedes;
 	private JFormattedTextField formattedTextCheckIn;
 	private JFormattedTextField formattedTextCheckOut;
-	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -81,7 +87,7 @@ public class JanelaPrincipal extends JFrame {
 	Data de Check-out - Digitado X
 	Número do Quarto - Digitado (Máx. 4) X
 	Tipo de Quarto - ComboBox X
-	Número de Hóspedes - Digitado (Máx. 4) X
+	Número de Hóspedes - Digitado (Máx. 6) X
 	Necessidades Especiais - Boolean X
 	Método de Pagamento - ComboBox X
 	Total a Pagar - Calculado X
@@ -100,7 +106,7 @@ public class JanelaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][][99.00][grow]", "[][][][][][][grow][][][][][][]"));
+		contentPane.setLayout(new MigLayout("", "[grow][][99.00][grow]", "[][][][][][][grow][][][][][][grow]"));
 		contentPane.setLayout(new MigLayout("", "[91px][86px][143px]", "[17px][20px][20px][20px][14px][20px]"));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Reserva");
@@ -118,7 +124,7 @@ public class JanelaPrincipal extends JFrame {
 		lblCheckIn = new JLabel("Check-In:");
 		contentPane.add(lblCheckIn, "cell 2 2,alignx left");
 		
-		JFormattedTextField jftfData1 = new JFormattedTextField(setMascara("##/##/####"));
+		formattedTextCheckIn = new JFormattedTextField(setMascara("##/##/####"));
 		contentPane.add(formattedTextCheckIn, "cell 3 2,growx");
 		
 		lblCPF = new JLabel("CPF:");
@@ -131,10 +137,7 @@ public class JanelaPrincipal extends JFrame {
 		lblCheckOut = new JLabel("Check-Out:");
 		contentPane.add(lblCheckOut, "cell 2 3,alignx left");
 		
-		/*
-		JFormattedTextField jftfTelefone = new JFormattedTextField((setMascara("(##) ####-####"))
-		*/
-		JFormattedTextField jftfData2 = new JFormattedTextField(setMascara("##/##/####"));
+		formattedTextCheckOut = new JFormattedTextField(setMascara("##/##/####"));
 		contentPane.add(formattedTextCheckOut, "cell 3 3,growx");
 		
 		JLabel lblEmail = new JLabel("Email:");
@@ -165,26 +168,29 @@ public class JanelaPrincipal extends JFrame {
 		contentPane.add(textTipoQuarto, "cell 3 5");
 		textTipoQuarto.setColumns(10);
 		
-		table = new JTable();
-		contentPane.add(table, "cell 0 6 2 7,grow");
-		
 		lblNumHospedes = new JLabel("Num. de Hóspedes:");
 		contentPane.add(lblNumHospedes, "cell 2 6");
 		
-		comboBoxNumHospedes = new JComboBox();
-		contentPane.add(comboBoxNumHospedes, "cell 3 6");
+		textNumHospedes = new JTextField();
+		textNumHospedes.setFont(new Font("Tahoma", Font.PLAIN, 11));
+		contentPane.add(textNumHospedes, "cell 3 6");
+		textNumHospedes.setColumns(10);
 		
 		lblNewLabel_1 = new JLabel("Necessidades Especiais:");
 		contentPane.add(lblNewLabel_1, "cell 2 7");
 		
-		comboBoxNecesEspeciais = new JComboBox();
-		contentPane.add(comboBoxNecesEspeciais, "cell 3 7");
+		rdbtnPCDSim = new JRadioButton("Sim");
+		buttonGroup.add(rdbtnPCDSim);
+		contentPane.add(rdbtnPCDSim, "cell 3 7");
 		
 		lblMetodoPag = new JLabel("Método de Pagamento:");
 		contentPane.add(lblMetodoPag, "cell 2 8");
 		
 		comboBoxMetPagamento = new JComboBox();
 		contentPane.add(comboBoxMetPagamento, "cell 3 8");
+		comboBoxMetPagamento.addItem(MetodoPagamento.PIX);
+		comboBoxMetPagamento.addItem(MetodoPagamento.BOLETO);
+		comboBoxMetPagamento.addItem(MetodoPagamento.CARTAO);
 		
 		lblTotalPagamento = new JLabel("Total à Pagar:");
 		contentPane.add(lblTotalPagamento, "cell 2 9");
@@ -197,6 +203,9 @@ public class JanelaPrincipal extends JFrame {
 		
 		comboBoxStatusReserva = new JComboBox();
 		contentPane.add(comboBoxStatusReserva, "cell 3 10");
+		comboBoxStatusReserva.addItem(StatusReserva.FINALIZADA);
+		comboBoxStatusReserva.addItem(StatusReserva.ANDAMENTO);
+		comboBoxStatusReserva.addItem(StatusReserva.CANCELADA);
 		
 		lblCodReserva = new JLabel("Código da Reserva:");
 		contentPane.add(lblCodReserva, "cell 2 11");
@@ -208,14 +217,17 @@ public class JanelaPrincipal extends JFrame {
 		lblComent = new JLabel("Comentários:");
 		contentPane.add(lblComent, "cell 2 12");
 		
-		textComent = new JTextField();
-		contentPane.add(textComent, "cell 3 12");
-		textComent.setColumns(10);
+		rdbtnPCDNao = new JRadioButton("Não");
+		buttonGroup.add(rdbtnPCDNao);
+		contentPane.add(rdbtnPCDNao, "cell 3 7");
+		
+		textPaneComent = new JTextPane();
+		contentPane.add(textPaneComent, "cell 3 12");
 	}
 	private MaskFormatter setMascara(String mascara){
 	    MaskFormatter mask = null;
 	    try{
-	        mask = new MaskFormatter(mascara);                      
+	        mask = new MaskFormatter(mascara);
 	        }catch(java.text.ParseException ex){}
 	    return mask;
 	}
