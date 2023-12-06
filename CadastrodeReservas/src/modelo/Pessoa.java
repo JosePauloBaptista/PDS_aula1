@@ -5,9 +5,9 @@ import java.time.LocalDate;
 public class Pessoa {
 	
 	private String nome;
-	private Float cpf;
+	private int cpf;
 	private String email;
-	private Float telefone;
+	private int telefone;
 	
 	public String getNome() {
 		return nome;
@@ -15,11 +15,11 @@ public class Pessoa {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public Float getCpf() {
+	public Integer getCpf() {
 		return cpf;
 	}
-	public void setCpf(Float cpf) {
-		this.cpf = cpf;
+	public void setCpf(int cPFConv) {
+		this.cpf = cPFConv;
 	}
 	public String getEmail() {
 		return email;
@@ -27,11 +27,11 @@ public class Pessoa {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Float getTelefone() {
+	public Integer getTelefone() {
 		return telefone;
 	}
-	public void setTelefone(Float telefone) {
-		this.telefone = telefone;
+	public void setTelefone(int telefoneConv) {
+		this.telefone = telefoneConv;
 	}
 	
 }
