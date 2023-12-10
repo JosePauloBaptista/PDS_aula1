@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 public class Reserva {
 	
+	private String nome;
+	private int cpf;
+	private String email;
+	private int telefone;
 	private LocalDate dataCheckin;
 	private LocalDate dataCheckout;
 	private Integer numQuarto;
@@ -16,6 +20,30 @@ public class Reserva {
 	private String coment;
 	private Float codReserva;
 	
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public int getCpf() {
+		return cpf;
+	}
+	public void setCpf(int cpf) {
+		this.cpf = cpf;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public int getTelefone() {
+		return telefone;
+	}
+	public void setTelefone(int telefone) {
+		this.telefone = telefone;
+	}
 	public LocalDate getDataCheckin() {
 		return dataCheckin;
 	}
