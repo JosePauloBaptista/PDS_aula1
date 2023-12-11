@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import modelo.Reserva;
 import modelo.ReservaJTableModel;
 
 import javax.swing.JScrollPane;
@@ -19,6 +20,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class TelaReservas extends JFrame {
@@ -37,7 +39,7 @@ public class TelaReservas extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TelaReservas frame = new TelaReservas();
+					TelaReservas frame = new TelaReservas(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,9 +50,10 @@ public class TelaReservas extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @param listaReservas 
 	 */
-	public TelaReservas() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	public TelaReservas(ArrayList<Reserva> listaReservas) {
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(252, 252, 252));
@@ -87,7 +90,7 @@ public class TelaReservas extends JFrame {
 				}
 				
 				//listaReservas.remove(idx_linha);
-				atualizarJTableModel();
+				atualizarJTableModel(listaReservas);
 			}
 		});
 		btnExcluir.setBackground(new Color(255, 140, 69));
@@ -106,7 +109,7 @@ public class TelaReservas extends JFrame {
 		btnFechar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnFechar, "cell 1 3,growx");
 	}
-	public void atualizarJTableModel() {
+	public void atualizarJTableModel(ArrayList<Reserva> listaReservas) {
 		table.setModel(new ReservaJTableModel(listaReservas));
 	}
 }

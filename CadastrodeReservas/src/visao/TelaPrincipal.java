@@ -2,6 +2,7 @@ package visao;
 
 import java.awt.EventQueue;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -96,20 +97,20 @@ public class TelaPrincipal extends JFrame {
 		
 	Cadastro de reservas/quartos de hotel para um sistema de turismo
 
-	Nome do Hóspede - Digitado X
-	CPF - Digitado X
-	Email - Digitado X
-	Telefone - Digitado X
+	Nome do Hóspede - Digitado 
+	CPF - Digitado 
+	Email - Digitado 
+	Telefone - Digitado 
 	
-	Data de Check-in - Digitado X
-	Data de Check-out - Digitado X
-	Número do Quarto - Digitado (Máx. 4) X
-	Tipo de Quarto - ComboBox X
-	Número de Hóspedes - Digitado (Máx. 6) X
-	Necessidades Especiais - Boolean X
-	Método de Pagamento - ComboBox X
-	Total a Pagar - Calculado X
-	Status da Reserva - ComboBox X
+	Data de Check-in - Digitado 
+	Data de Check-out - Digitado 
+	Número do Quarto - Digitado 
+	Tipo de Quarto - ComboBox 
+	Número de Hóspedes - Digitado 
+	Necessidades Especiais - Boolean 
+	Método de Pagamento - ComboBox 
+	Total a Pagar - Digitado
+	Status da Reserva - ComboBox 
 	Comentários - Digitado 
 	Código da Reserva - Digitado 
 	
@@ -125,13 +126,13 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new MigLayout("", "[grow][grow][99.00][117.00,grow]", "[][][][][][][grow][][][][][][]"));
+		//contentPane.setLayout(new MigLayout("", "[grow][grow][99.00][117.00,grow]", "[][][][][][][grow][][][][][][]"));
 		contentPane.setLayout(new MigLayout("", "[91px][86px][143px]", "[17px][20px][20px][20px][14px][20px]"));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Reserva");
 		lblNewLabel.setForeground(new Color(53, 53, 53));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		contentPane.add(lblNewLabel, "cell 1 0");
+		contentPane.add(lblNewLabel, "alignx center");
 		
 		JLabel lblNome = new JLabel("Nome do Hóspede:");
 		lblNome.setHorizontalAlignment(SwingConstants.TRAILING);
@@ -145,7 +146,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(lblTipoQuarto, "cell 2 2");
 		
 		comboBoxTipoQuarto = new JComboBox();
-		contentPane.add(comboBoxTipoQuarto, "cell 3 2");
+		contentPane.add(comboBoxTipoQuarto, "alignx left");
 		comboBoxTipoQuarto.addItem(TipoQuarto.SIMPLES);
 		comboBoxTipoQuarto.addItem(TipoQuarto.SUÍTE);
 		comboBoxTipoQuarto.addItem(TipoQuarto.DELUXE);
@@ -265,10 +266,11 @@ public class TelaPrincipal extends JFrame {
 				Enum StatusReserva = (Enum) comboBoxStatusReserva.getSelectedItem();
 				String CodReserva = textCodReserva.getText();
 				String Comentarios = textComent.getText();
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+				LocalDate CheckInConv = LocalDate.parse(CheckIn, formatter);
+				LocalDate CheckOutConv = LocalDate.parse(CheckOut, formatter);
 				
-				LocalDate CheckInConv = LocalDate.parse(CheckIn);
-				LocalDate CheckOutConv = LocalDate.parse(CheckOut);
-				int CPFConv = Integer.parseInt(CPF);
 				int TelefoneConv = Integer.parseInt(Telefone);
 				int NumQuartoConv = Integer.parseInt(NumQuarto);
 				int NumHospedesConv = Integer.parseInt(NumHospedes);
@@ -278,7 +280,7 @@ public class TelaPrincipal extends JFrame {
 				
 				Reserva r = new Reserva();
 				r.setNome(Nome);
-				r.setCpf(CPFConv);
+				r.setCpf(CPF);
 				r.setEmail(Email);
 				r.setTelefone(TelefoneConv);
 				r.setDataCheckin(CheckInConv);
@@ -294,10 +296,10 @@ public class TelaPrincipal extends JFrame {
 				
 				listaReservas.add(r);
 				
-				atualizarJTableModel();
 				limparCampos();
 				
 			}
+			
 		});
 		contentPane.add(btnCadastrar, "cell 1 10");
 		
@@ -306,7 +308,8 @@ public class TelaPrincipal extends JFrame {
 		btnReservas.setBackground(new Color(255, 140, 69));
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaReservas TelaTabelaReservas = new TelaReservas();
+				TelaReservas TelaTabelaReservas = new TelaReservas(listaReservas);
+				
 				TelaTabelaReservas.setVisible(true);
 			}
 		});
@@ -328,9 +331,6 @@ public class TelaPrincipal extends JFrame {
 		});
 		btnFechar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnFechar, "cell 3 10");
-	}
-	public void atualizarJTableModel() {
-		table.setModel(new ReservaJTableModel(listaReservas));
 	}
 	
 	protected void limparCampos() {
