@@ -18,7 +18,7 @@ public class Reserva {
 	private Float totalPagar;
 	private Enum statReserva;
 	private String coment;
-	private Float codReserva;
+	private Integer codReserva;
 	
 	public String getNome() {
 		return nome;
@@ -104,11 +104,11 @@ public class Reserva {
 	public void setComent(String coment) {
 		this.coment = coment;
 	}
-	public Float getCodReserva() {
+	public Integer getCodReserva() {
 		return codReserva;
 	}
-	public void setCodReserva(Float codReserva) {
-		this.codReserva = codReserva;
+	public void setCodReserva(int codReservaConv) {
+		this.codReserva = codReservaConv;
 	}
 	
 }

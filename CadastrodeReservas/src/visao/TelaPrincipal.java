@@ -10,8 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
 import modelo.MetodoPagamento;
-import modelo.Pessoa;
 import modelo.Reserva;
+import modelo.ReservaJTableModel;
 import modelo.StatusReserva;
 import modelo.TipoQuarto;
 import net.miginfocom.swing.MigLayout;
@@ -56,9 +56,10 @@ public class TelaPrincipal extends JFrame {
 	private JLabel lblStatusReserva;
 	private JLabel lblCodReserva;
 	private JLabel lblComent;
+	private JTable table;
 	private JComboBox<MetodoPagamento> comboBoxMetPagamento;
 	private JComboBox<StatusReserva> comboBoxStatusReserva;
-	private JTextField textFieldCodReserva;
+	private JTextField textCodReserva;
 	private JRadioButton rdbtnPCDSim;
 	private JRadioButton rdbtnPCDNao;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
@@ -66,9 +67,9 @@ public class TelaPrincipal extends JFrame {
 	private JFormattedTextField formattedTextCheckIn;
 	private JFormattedTextField formattedTextCheckOut;
 	private JButton btnFechar;
-	ArrayList<Reserva> listaPessoas = new ArrayList<Reserva>();
+	ArrayList<Reserva> listaReservas = new ArrayList<Reserva>();
 	private JButton btnCadastrar;
-	private JComboBox comboBoxTipoQuarto;
+	private JComboBox<TipoQuarto> comboBoxTipoQuarto;
 	private JTextField textTotalPagar;
 	private JTextField textComent;
 	private JFormattedTextField formattedTextCPF;
@@ -118,8 +119,9 @@ public class TelaPrincipal extends JFrame {
 	 */
 	public TelaPrincipal() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 596, 360);
+		setBounds(100, 100, 596, 325);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(252, 252, 252));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
@@ -127,6 +129,7 @@ public class TelaPrincipal extends JFrame {
 		contentPane.setLayout(new MigLayout("", "[91px][86px][143px]", "[17px][20px][20px][20px][14px][20px]"));
 		
 		JLabel lblNewLabel = new JLabel("Cadastro de Reserva");
+		lblNewLabel.setForeground(new Color(53, 53, 53));
 		lblNewLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
 		contentPane.add(lblNewLabel, "cell 1 0");
 		
@@ -223,9 +226,9 @@ public class TelaPrincipal extends JFrame {
 		lblCodReserva = new JLabel("Código da Reserva:");
 		contentPane.add(lblCodReserva, "cell 2 8");
 		
-		textFieldCodReserva = new JTextField();
-		contentPane.add(textFieldCodReserva, "cell 3 8");
-		textFieldCodReserva.setColumns(10);
+		textCodReserva = new JTextField();
+		contentPane.add(textCodReserva, "cell 3 8");
+		textCodReserva.setColumns(10);
 		
 		lblNumQuarto = new JLabel("Num. do Quarto:");
 		contentPane.add(lblNumQuarto, "cell 0 9");
@@ -242,6 +245,7 @@ public class TelaPrincipal extends JFrame {
 		textComent.setColumns(10);
 		
 		btnCadastrar = new JButton("Cadastrar");
+		btnCadastrar.setBackground(new Color(255, 140, 69));
 		btnCadastrar.setForeground(new Color(240, 240, 240));
 		btnCadastrar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		btnCadastrar.addActionListener(new ActionListener() {
@@ -251,30 +255,46 @@ public class TelaPrincipal extends JFrame {
 				String CPF = formattedTextCPF.getText();
 				String Email = textEmail.getText();
 				String Telefone = textTelefone.getText();
+				String CheckIn = formattedTextCheckIn.getText();
+				String CheckOut = formattedTextCheckIn.getText();
+				String NumQuarto = textNumQuarto.getText();
+				Enum TipoQuarto = (Enum) comboBoxTipoQuarto.getSelectedItem();
+				String NumHospedes = textNumHospedes.getText();
+				Enum MetPag = (Enum) comboBoxTipoQuarto.getSelectedItem();
+				String TotalPagar = textTotalPagar.getText();
+				Enum StatusReserva = (Enum) comboBoxStatusReserva.getSelectedItem();
+				String CodReserva = textCodReserva.getText();
+				String Comentarios = textComent.getText();
 				
-				
+				LocalDate CheckInConv = LocalDate.parse(CheckIn);
+				LocalDate CheckOutConv = LocalDate.parse(CheckOut);
 				int CPFConv = Integer.parseInt(CPF);
 				int TelefoneConv = Integer.parseInt(Telefone);
+				int NumQuartoConv = Integer.parseInt(NumQuarto);
+				int NumHospedesConv = Integer.parseInt(NumHospedes);
+				float TotalPagarConv = Float.parseFloat(TotalPagar);
+				int CodReservaConv = Integer.parseInt(CodReserva);
+				
 				
 				Reserva r = new Reserva();
 				r.setNome(Nome);
 				r.setCpf(CPFConv);
 				r.setEmail(Email);
 				r.setTelefone(TelefoneConv);
-				/*r.setDataCheckin();
-				r.setDataCheckout();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();
-				r.setDataCheckin();*/
+				r.setDataCheckin(CheckInConv);
+				r.setDataCheckout(CheckOutConv);;
+				r.setNumQuarto(NumQuartoConv);
+				r.setTipoQuarto(TipoQuarto);
+				r.setNumHospedes(NumHospedesConv);
+				r.setMetPag(MetPag);
+				r.setTotalPagar(TotalPagarConv);;
+				r.setStatReserva(StatusReserva);;
+				r.setCodReserva(CodReservaConv);;
+				r.setComent(Comentarios);
 				
-				listaPessoas.add(r);
+				listaReservas.add(r);
 				
+				atualizarJTableModel();
 				limparCampos();
 				
 			}
@@ -282,16 +302,24 @@ public class TelaPrincipal extends JFrame {
 		contentPane.add(btnCadastrar, "cell 1 10");
 		
 		btnReservas = new JButton("Reservas");
+		TelaPrincipal estaTela = this;
+		btnReservas.setBackground(new Color(255, 140, 69));
+		btnReservas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaReservas TelaTabelaReservas = new TelaReservas();
+				TelaTabelaReservas.setVisible(true);
+			}
+		});
 		btnReservas.setForeground(new Color(240, 240, 240));
 		btnReservas.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnReservas, "cell 2 10");
-		contentPane.add(btnNewButton, "cell 2 11");
 		
 		rdbtnPCDNao = new JRadioButton("Não");
 		buttonGroup.add(rdbtnPCDNao);
 		contentPane.add(rdbtnPCDNao, "cell 3 4");
 		
 		btnFechar = new JButton("Fechar");
+		btnFechar.setBackground(new Color(255, 140, 69));
 		btnFechar.setForeground(new Color(240, 240, 240));
 		btnFechar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -301,11 +329,23 @@ public class TelaPrincipal extends JFrame {
 		btnFechar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnFechar, "cell 3 10");
 	}
+	public void atualizarJTableModel() {
+		table.setModel(new ReservaJTableModel(listaReservas));
+	}
+	
 	protected void limparCampos() {
 		textNomeHospede.setText("");
 		formattedTextCPF.setText("");
 		textEmail.setText("");
 		textTelefone.setText("");
+		formattedTextCheckIn.setText("");
+		formattedTextCheckOut.setText("");
+		textNumQuarto.setText("");
+		textNumHospedes.setText("");
+		textTotalPagar.setText("");
+		textCodReserva.setText("");
+		textComent.setText("");
+		
 	}
 
 	private MaskFormatter setMascara(String mascara){
