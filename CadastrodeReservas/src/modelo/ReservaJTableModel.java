@@ -16,7 +16,9 @@ private String[] colunas ={"Nome", "CPF", "Email", "Telefone", "Data CheckIn", "
 	
 	@Override
 	public int getRowCount() {
+		System.out.println(this.lista.size());
 		return this.lista.size();
+		
 	}
 
 	@Override

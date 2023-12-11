@@ -309,7 +309,7 @@ public class TelaPrincipal extends JFrame {
 		btnReservas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaReservas TelaTabelaReservas = new TelaReservas(listaReservas);
-				
+				System.out.println(listaReservas);
 				TelaTabelaReservas.setVisible(true);
 			}
 		});

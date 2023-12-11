@@ -108,6 +108,9 @@ public class TelaReservas extends JFrame {
 		btnFechar.setForeground(new Color(240, 240, 240));
 		btnFechar.setFont(new Font("Tahoma", Font.BOLD, 11));
 		contentPane.add(btnFechar, "cell 1 3,growx");
+		
+		atualizarJTableModel(listaReservas);
+
 	}
 	public void atualizarJTableModel(ArrayList<Reserva> listaReservas) {
 		table.setModel(new ReservaJTableModel(listaReservas));
